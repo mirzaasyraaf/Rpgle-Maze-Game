@@ -1,0 +1,137 @@
+FGAME2D    CF   E             WORKSTN                       
+                                                            
+D ROW             DS                  QUALIFIED DIM(13)     
+D  COL                           2S 0 DIM(42)               
+DI                S              2S 0                       
+DJ                S              2S 0                       
+DXI               S              2S 0                       
+DXJ               S              2S 0                       
+DINIT             S              1A                         
+ *----------------------------------------------------------
+C     RESTART       TAG                                     
+C                   EXFMT     D02                           
+C                   EXSR      SETGAME                       
+C                   EVAL      *IN03 = '0'                   
+C                   EVAL      *IN05 = '0'                   
+C                   DOW       *IN03 = '0'                   
+C                   EXSR      GAMESTART                     
+C                   EXFMT     D01                           
+C                   ENDDO                                   
+C                                                                        
+C                   EVAL      *INLR = '1'                                
+ *----------------------------------------------------------             
+C     SETWALLS      BEGSR                                                
+C                   EVAL      ROW(1)= 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'+
+C                                     'XXXXXXXXXX'                       
+C                   EVAL      ROW(2)= 'X $                             '+
+C                                     '          '                       
+C                   EVAL      ROW(3)= 'X      XXXXXXXXXXXXXXXXXXXXXXXXX'+
+C                                     'XXXXXXXXXX'                       
+C                   EVAL      ROW(4)= 'X                               '+
+C                                     '         X'                       
+C                   EVAL      ROW(5)= 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'+
+C                                     'XXXX     X'                       
+C                   EVAL      ROW(6)= 'X              $                '+
+C                                     '   X     X'                       
+C                   EVAL      ROW(7)= 'X                               '+
+C                                     '         X'                       
+C                   EVAL      ROW(8)= 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'+
+C                                     'XXXX     X'                        
+C                   EVAL      ROW(9)= 'X        $             $        '+ 
+C                                     '   X     X'                        
+C                   EVAL      ROW(10)= 'X                            $  '+
+C                                     '   X     X'                        
+C                   EVAL      ROW(11)= 'XXXXX  XXXXXXXXXXXXXXXXXXXXXXXXX'+
+C                                     'XXXX     X'                        
+C                   EVAL      ROW(12)= '                                '+
+C                                     '         X'                        
+C                   EVAL      ROW(13)= 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'+
+C                                     'XXXXXXXXXX'                        
+C                   EXSR      MAP                                         
+C                   ENDSR                                                 
+ *----------------------------------------------------------              
+C     GAMESTART     BEGSR                                                 
+C                   IF        INIT = '1'                                  
+C                   EVAL      %SUBST(ROW(12):1:1) = ' '                   
+C                   EVAL      INIT = '0'                                  
+C                   ENDIF                                                 
+C                   IF        MOVE = 'D'                  
+C                   IF        %SUBST(ROW(I):J+1:1)  <> 'X'
+C                   EVAL      J = J + 1                   
+C                   IF        %SUBST(ROW(I):J:1) = '$'    
+C                   EVAL      SCORE = SCORE + 1           
+C                   ENDIF                                 
+C                   EXSR      SETPOS                      
+C                   ENDIF                                 
+C                   ELSEIF    MOVE = 'A'                  
+C                   IF        %SUBST(ROW(I):J-1:1)  <> 'X'
+C                   EVAL      J = J - 1                   
+C                   IF        %SUBST(ROW(I):J:1) = '$'    
+C                   EVAL      SCORE = SCORE + 1           
+C                   ENDIF                                 
+C                   EXSR      SETPOS                      
+C                   ENDIF                                 
+C                   ELSEIF    MOVE = 'W'                  
+C                   IF        %SUBST(ROW(I-1):J:1)  <> 'X'
+C                   EVAL      I = I - 1                                
+C                   IF        %SUBST(ROW(I):J:1) = '$'                 
+C                   EVAL      SCORE = SCORE + 1                        
+C                   ENDIF                                              
+C                   EXSR      SETPOS                                   
+C                   ENDIF                                              
+C                   ELSEIF    MOVE = 'S'                               
+C                   IF        %SUBST(ROW(I+1):J:1)  <> 'X'             
+C                   EVAL      I = I + 1                                
+C                   IF        %SUBST(ROW(I):J:1) = '$'                 
+C                   EVAL      SCORE = SCORE + 1                        
+C                   ENDIF                                              
+C                   EXSR      SETPOS                                   
+C                   ENDIF                                              
+C                   ENDIF                                              
+C                   IF        I = 2 AND J > 42                         
+C                   SETON                                            70
+C                   ENDIF                                              
+C                   IF        *IN05 = '1'                              
+C                   CLEAR                   D01             
+C                   CLEAR                   D02             
+C                   GOTO      RESTART                       
+C                   ENDIF                                   
+C                   ENDSR                                   
+ *----------------------------------------------------------
+C     SETPOS        BEGSR                                   
+C                   EVAL      %SUBST(ROW(I):J:1) = '@'      
+C                   EVAL      %SUBST(ROW(XI):XJ:1) = ' '    
+C                   EVAL      XI = I                        
+C                   EVAL      XJ = J                        
+C                   EXSR      MAP                           
+C                   ENDSR                                   
+ *----------------------------------------------------------
+C     SETGAME       BEGSR                                   
+C                   EVAL      I = 12                        
+C                   EVAL      J = 1                         
+C                   EVAL      XI = 2                        
+C                   EVAL      XJ = 42                       
+C                   EVAL      INIT = '1'                               
+C                   EVAL      USERNAME = NAME                          
+C                   EVAL      SCORE = 0                                
+C                   EXSR      SETWALLS                                 
+C                   EVAL      %SUBST(ROW(I):J:1) = '@'                 
+C                   EXSR      MAP                                      
+C                   SETOFF                                           70
+C                   ENDSR                                              
+ *----------------------------------------------------------           
+C     MAP           BEGSR                                              
+C                   EVAL      WALL1 = ROW(1)                           
+C                   EVAL      WALL2 = ROW(2)                           
+C                   EVAL      WALL3 = ROW(3)                           
+C                   EVAL      WALL4 = ROW(4)                           
+C                   EVAL      WALL5 = ROW(5)                           
+C                   EVAL      WALL6 = ROW(6)                           
+C                   EVAL      WALL7 = ROW(7)                           
+C                   EVAL      WALL8 = ROW(8)                           
+C                   EVAL      WALL9 = ROW(9)                           
+C                   EVAL      WALL10 = ROW(10)
+C                   EVAL      WALL11 = ROW(11)
+C                   EVAL      WALL12 = ROW(12)
+C                   EVAL      WALL13 = ROW(13)
+C                   ENDSR                     
