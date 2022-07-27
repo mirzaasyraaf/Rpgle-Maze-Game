@@ -1,0 +1,59 @@
+A*%%TS  SD  20220716  213402  SLAMMAR     REL-V7R3M0  5770-WDS          
+A*%%EC                                                                  
+A                                      DSPSIZ(24 80 *DS3)               
+A          R D02                                                        
+A*%%TS  SD  20220715  074230  SLAMMAR     REL-V7R3M0  5770-WDS          
+A                                  9 29'PLEASE ENTER YOUR NAME:'        
+A                                      DSPATR(HI)                       
+A            NAME          10   B 11 36DSPATR(UL)                       
+A          R D01                                                        
+A*%%TS  SD  20220716  213402  SLAMMAR     REL-V7R3M0  5770-WDS          
+A                                      CA03(03)                         
+A                                      CA05(05)                         
+A                                  1 68TIME                             
+A                                  1  3DATE                             
+A                                      EDTCDE(Y)                        
+A                                  3 26'WELCOME TO THE MAZE ESCAPE GAME'
+A                                      DSPATR(HI)                       
+A                                      DSPATR(UL)                       
+A                                 23 28'F3=GIVE UP'                     
+A                                 23 42'F5=PLAY AGAIN'
+A            USERNAME      10A  O  5 40               
+A                                  5 32'PLAYER:'      
+A            WALL1         42A  O  7 17               
+A                                  8 60'FINISH'       
+A                                      DSPATR(HI)     
+A                                 18 10'START'        
+A                                      DSPATR(HI)     
+A            WALL2         42A  O  8 17               
+A            WALL3         42A  O  9 17               
+A            WALL4         42A  O 10 17               
+A            WALL5         42A  O 11 17               
+A            WALL6         42A  O 12 17               
+A            WALL7         42A  O 13 17               
+A            WALL8         42A  O 14 17               
+A            WALL9         42A  O 15 17               
+A            WALL10        42A  O 16 17               
+A            WALL11        42A  O 17 17               
+A            WALL12        42A  O 18 17               
+A            WALL13        42A  O 19 17           
+A                                 18 61'MOVE:'    
+A                                      DSPATR(HI) 
+A            MOVE           1A  B 18 67           
+A                                 11 61'CONTROLS:'
+A                                      DSPATR(HI) 
+A                                      DSPATR(UL) 
+A                                 12 62'W = UP'   
+A                                      COLOR(BLU) 
+A                                 13 62'S = DOWN' 
+A                                      COLOR(BLU) 
+A                                 14 62'D = RIGHT'
+A                                      COLOR(BLU) 
+A                                 15 62'A = LEFT' 
+A                                      COLOR(BLU) 
+A                                  5 60'SCORE:'   
+A                                      DSPATR(HI) 
+A            SCORE          1S 0O  5 67           
+A                                  5 69'$'        
+A  70                             21 32'CONGRATS YOU WON!'
+A                                      DSPATR(HI)         
