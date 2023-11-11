@@ -1,5 +1,5 @@
 FGAME2D    CF   E             WORKSTN                       
-                                                            
+ *-------------------------------------------------------------                                                     
 D ROW             DS                  QUALIFIED DIM(13)     
 D  COL                           2S 0 DIM(42)               
 DI                S              2S 0                       
